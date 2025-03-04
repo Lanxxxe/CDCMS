@@ -1,0 +1,41 @@
+{% extends 'base_teacher.html' %}
+
+{% block title %}Guardian Management - CDCMS{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="welcome-section">
+    <h3 class="mb-0">Guardian Management</h3>
+</div>
+
+<div class="container-fluid px-4">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-sm">
+            <thead class="">
+                <tr class="text-center table-head-columns">
+                    <th class="bg-primary text-white" scope="col">Student Name</th>
+                    <th class="bg-primary text-white" scope="col">Relationship</th>
+                    <th class="bg-primary text-white" scope="col">Guardian Name</th>
+                    <th class="bg-primary text-white" scope="col">Contact Number</th>
+                    <th class="bg-primary text-white" scope="col">Email</th>
+                    <th class="bg-primary text-white" scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>test</td>
+                    <td>test</td>
+                    <td>test</td>
+                    <td>test</td>
+                    <td>test</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm mx-auto d-block"><i class="bi bi-pencil-square"></i> Update</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,197 @@
+{% extends 'base_landing.html' %}
+
+{% load static %}
+
+{% block title %}CDCMS | Enrollment{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center bg-primary gap-4 py-3">
+    <a href="{%  url 'home'%}">
+        <img src="{% static 'images/cropMainCDC.png' %}" class="enroll-header-img" width="125" height="125" alt="cdc">
+    </a>
+    
+    <div class="text-center">
+        <p class="text-white">CHILD DEVELOPMENT CENTER MANAGEMENT SYSTEM</p>
+        <p class="text-white">ENROLLMENT PROCESS</p>
+    </div>
+
+    <img src="{% static 'images/logo.png' %}" class="enroll-header-img" width="100" height="100" alt="logo">
+</div>
+
+<div class="container bg-enrollment p-4 my-4 rounded">
+    <div class="">
+        <h5 class="fw-bold">Application Process</h5>
+        <p>
+            The Child Development Center’s online application process is simple, secure and convenient. You can start filling out your application now, save your progress, and complete it at your convenience. Once registered, you will receive a Student ID Number. 
+        </p>
+    </div>
+    
+    <div class="mt-4">
+        <h5 class="fw-bold">Basic Requirements</h5>
+        <ul>
+            <li>Your child meets the age requirement for enrollment</li>
+            <li>You can provide a copy of your child's PSA</li>
+            <li>Your child's immunizations are up to date</li>
+            <li>You have emergency contact details ready</li>
+        </ul>
+    </div>
+
+    <div class="mt-4">
+        <h5 class="fw-bold">NOTES</h5>
+        <ul>
+            <li>Fields with asterisk (*) are required.</li>
+            <li>Requirements without an (*) can be submitted online through the Portal.</li>
+            <li>Put a WORKING email, student number will be sent to your email.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Form Start -->
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="container bg-enrollment p-4 my-4 rounded">
+
+        <div class="">
+            <h5 class="fw-bold">STUDENT BASIC INFORMATION</h5>
+            <div class="row mt-2">
+                <div class="col">
+                    {{ form.lName.label_tag }}
+                    {{ form.lName }}
+                </div>
+                <div class="col">
+                    {{ form.fName.label_tag }} {{ form.fName }}
+                </div>
+                <div class="col">
+                    {{ form.mName.label_tag }} {{ form.mName }}
+                </div>
+                <div class="col">
+                    {{ form.suffix.label_tag }} {{ form.suffix }}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    {{ form.bDay.label_tag }} {{ form.bDay }}
+                </div>
+                <div class="col">
+                    {{ form.age.label_tag }} {{ form.age }}
+                </div>
+                <div class="col">
+                    {{ form.sex.label_tag }} {{ form.sex }}
+                </div>
+                <div class="col">
+                    {{ form.healthHistory.label_tag }} {{ form.healthHistory }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h5 class="fw-bold">ADDRESS</h5>
+            <div class="row row-cols-4 mt-2">
+                <div class="col">
+                    {{ form.addressNumber.label_tag }} {{ form.addressNumber }}
+                </div>
+                <div class="col">
+                    {{ form.brgy.label_tag }} {{ form.brgy }}
+                </div>
+                <div class="col">
+                    {{ form.municipality.label_tag }} {{ form.municipality }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h5 class="fw-bold">PARENTS/GUARDIAN INFORMATION</h5>
+            <p class="fw-bold mt-3">Father's Information</p>
+            <div class="row">
+                <div class="col">
+                    {{ form.fatherLName.label_tag }} {{ form.fatherLName }}
+                </div>
+                <div class="col">
+                    {{ form.fatherFName.label_tag }} {{ form.fatherFName }}
+                </div>
+                <div class="col">
+                    {{ form.fatherMName.label_tag }} {{ form.fatherMName }}
+                </div>
+                <div class="col">
+                    {{ form.fatherContactNo.label_tag }} {{ form.fatherContactNo }}
+                </div>
+            </div>
+            
+
+            <p class="fw-bold mt-3">Mother's Maiden Name</p>
+            <div class="row">
+                <div class="col">
+                    {{ form.motherLName.label_tag }} {{ form.motherLName }}
+                </div>
+                <div class="col">
+                    {{ form.motherFName.label_tag }} {{ form.motherFName }}
+                </div>
+                <div class="col">
+                    {{ form.motherMName.label_tag }} {{ form.motherMName }}
+                </div>
+                <div class="col">
+                    {{ form.motherContactNo.label_tag }} {{ form.motherContactNo }}
+                </div>
+            </div>
+
+            <p class="fw-bold mt-4">Guardian's Information</p>
+            <div class="row">
+                <div class="col">
+                    {{ form.guardianLName.label_tag }} {{ form.guardianLName }}
+                </div>
+                <div class="col">
+                    {{ form.guardianFName.label_tag }} {{ form.guardianFName }}
+                </div>
+                <div class="col">
+                    {{ form.guardianMName.label_tag }} {{ form.guardianMName }}
+                </div>
+                <div class="col">
+                    {{ form.guardianContactNo.label_tag }} {{ form.guardianContactNo }}
+                </div>
+            </div>
+            <div class="row row-cols-4 mt-3">
+                <div class="col">
+                    {{ form.guardianRelationship.label_tag }} {{ form.guardianRelationship }}
+                </div>
+                <div class="col">
+                    {{ form.guardianEmail.label_tag }} {{ form.guardianEmail }}
+                </div>
+                <div class="col">
+                    {{ form.guardianOccupation.label_tag }} {{ form.guardianOccupation }}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h5 class="fw-bold">ENROLLMENT INFORMATION</h5>
+            <div class="row row-cols-4">
+                <div class="col">
+                    {{ form.schedule.label_tag }} {{ form.schedule }}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mt-4">
+            <h5 class="fw-bold">REQUIREMENTS</h5>
+            <div class="row row-cols-4">
+                <div class="col">
+                    {{ form.psa.label_tag }} {{ form.psa }}
+                </div>
+                <div class="col">
+                    {{ form.immunization_card.label_tag }} {{ form.immunization_card }}
+                </div>
+                <div class="col">
+                    {{ form.recent_photo.label_tag }} {{ form.recent_photo }}
+                </div>
+                <div class="col">
+                    {{ form.guardian_qc_id.label_tag }} {{ form.guardian_qc_id }}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary d-block w-100 mt-5">Submit</button>
+    </div>
+</form>
+{% endblock %}

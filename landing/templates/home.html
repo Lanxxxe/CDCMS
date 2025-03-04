@@ -1,0 +1,88 @@
+{% extends 'base_landing.html' %}
+
+{% load static %}
+
+{% block title %}CDCMS | HOME{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <div class="d-flex">
+            <img src="{% static 'images/logo.png' %}" width="50" height="50" class="d-inline-block align-top" alt="logo">
+            <p class="cdcms-logo">CDCMS</p>
+        </div>
+    </a>
+    <div class="justify-content-end" id="navbarNav">
+        <a class="btn btn-sm btn-primary py-2 px-3" href="{% url 'enroll' %}">ENROLL NOW</a>
+    </div>
+</nav>
+<main>
+    <div class="home-container d-flex justify-content-around">
+        <div class="align-self-between">
+            <h2 class="custom-bold">Welcome to Bright</h2>
+            <h2 class="custom-bold">Futures Child Care</h2>
+            <h1 class="custom-bold">SCHOOL</h1>
+        </div>
+        <div>
+            <img src="{% static 'images/mainCDC.png' %}" alt="mainCDC">
+        </div>
+    </div>
+    
+    <div class="container" style="padding: 4rem 0">
+        <h3 class="text-center fw-bold" style="color: rgb(14, 67, 168);">ABOUT SCHOOL</h3>
+        <p class="text-center fs-5 fw-normal w-75 mx-auto">Our school is dedicated to providing a safe, nurturing, and engaging environment where children can explore their potential, develop essential skills, and build a strong foundation for lifelong learning and success.</p>
+        
+        <div class="container d-flex py-3 mt-5 justify-content-center">
+            <div class="p-2">
+                <h3 class="text-center fw-bold" style="color: rgb(14, 67, 168);">MISSION</h3>
+                <div class="w-75 bg-primary mx-auto rounded p-4 mt-3">
+                    <p class="fs-5 text-white text-center">Our school is dedicated to providing a safe, nurturing, and engaging environment where children can explore their potential, develop essential skills, and build a strong foundation for lifelong learning and success.</p>
+                </div>
+            </div>
+            <div class="p-2">
+                <h3 class="text-center fw-bold" style="color: rgb(14, 67, 168);">VISION</h3>
+                <div class="w-75 bg-primary mx-auto rounded p-4 mt-3">
+                    <p class="fs-5 text-white text-center">Our school is dedicated to providing a safe, nurturing, and engaging environment where children can explore their potential, develop essential skills, and build a strong foundation for lifelong learning and success.</p>
+                </div>
+            </div>
+        </div>
+        <!-- <a class="read-more-btn">READ MORE →</a> -->
+    </div>
+    
+    <div class="container" style="padding: 4rem 0">
+        <h3 class="text-center fw-bold" style="color: rgb(14, 67, 168);">Events</h3>
+        <p class="fs-5 text-center my-3">
+            Our teachers are passionate and highly qualified, dedicated to helping each child grow and succeed. They create a supportive environment that encourages curiosity, creativity, and a lifelong love of learning.    
+        </p>
+        
+        <div class="d-flex align-items-center justify-content-center gap-5 mt-3">
+            <img class="" src="{% static 'images/default.png' %}" alt="Student Artwork">
+            <img class="" src="{% static 'images/default.png' %}" alt="Student Artwork">
+            <img class="" src="{% static 'images/default.png' %}" alt="Student Artwork">
+            <img class="" src="{% static 'images/default.png' %}" alt="Student Artwork">
+            <img class="" src="{% static 'images/default.png' %}" alt="Student Artwork">
+            
+        </div>
+    </div>
+
+    <div class="container" style="padding: 4rem 0">
+        <h3 class="text-center fw-bold" style="color: rgb(14, 67, 168);">OUR TEACHERS</h3>
+        <p class="fs-5">Our teachers are passionate and highly qualified, dedicated to helping each child grow and succeed. They create a supportive environment that encourages curiosity, creativity, and a lifelong love of learning.</p>
+        
+        <div class="teachers-images">
+            <div>
+                <div class="card">
+                    <a href="/"><img src="{% static 'images/default.png' %}" alt="Teacher Charmaine"></a>
+                    <p>Charmaine</p>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <a href="/"><img src="{% static 'images/default.png' %}" alt="Teacher Charmaine"></a>
+                    <p>Charmaine</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
