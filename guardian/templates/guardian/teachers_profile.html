@@ -1,0 +1,23 @@
+{% extends 'base_guardian.html' %}
+{% load static %}
+
+{% block title %}Guardian | Teacher's Profile{% endblock %}
+
+{% block content %}
+<div class="welcome-section">
+    <h3 class="mb-0">Teacher's Profile</h3>
+</div>
+
+<div class="container-fluid px-4">
+    <div class="d-flex align-items-center justify-content-center gap-5">
+        <img class="rounded img-fluid" src="{% static 'images/female.jpg' %}" alt="">
+        <div>
+            <h4 class="fw-bold">Adviser</h4>
+            <p class="mb-1">Name:</p>
+            <p class="mb-1">Contact Number:</p>
+            <p class="mb-1">Schedule:</p>
+            <p class="mb-1">Role:</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -21,39 +21,45 @@
         </div>
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
-                <a href="" class="nav-link {% if request.resolver_match.url_name == 'guardian_announcement' %}active{% endif %}">
-                    <i class="bi bi-speedometer2"></i>
+                <a href="{% url 'guardian_announcement' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_announcement' %}active{% endif %}">
+                    <i class="bi bi-megaphone"></i>
                     <span class="nav-text">Announcement </span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link {% if request.resolver_match.url_name == 'guardian_attendance' %}active{% endif %}">
-                    <i class="bi bi-person"></i>
+                <a href="{% url 'guardian_attendance' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_attendance' %}active{% endif %}">
+                    <i class="bi bi-calendar-check"></i>
                     <span class="nav-text">Attendance</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link {% if request.resolver_match.url_name == 'guardian_grades' %}active{% endif %}">
-                    <i class="bi bi-people"></i>
+                <a href="{% url 'guardian_grades' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_grades' %}active{% endif %}">
+                    <i class="bi bi-card-list"></i>
                     <span class="nav-text">Grades</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link {% if request.resolver_match.url_name == 'guardian_requirements' %}active{% endif %}">
-                    <i class="bi bi-person-badge"></i>
+                <a href="{% url 'guardian_requirements' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_requirements' %}active{% endif %}">
+                    <i class="bi bi-card-checklist"></i>
                     <span class="nav-text">Requirements</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link {% if request.resolver_match.url_name == 'guardian_teachers_profile' %}active{% endif %}">
+                <a href="{% url 'guardian_teachers_profile' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_teachers_profile' %}active{% endif %}">
                     <i class="bi bi-megaphone"></i>
                     <span class="nav-text">Teacher's Profile</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link {% if request.resolver_match.url_name == 'guardian_ai_recommendation' %}active{% endif %}">
+                <a href="{% url 'guardian_ai_recommendation' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_ai_recommendation' %}active{% endif %}">
                     <i class="bi bi-calendar-check"></i>
                     <span class="nav-text">A.I. Recommendation</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link">
+                    <i class="bi bi-calendar-check"></i>
+                    <span class="nav-text">Logout</span>
                 </a>
             </li>
         </ul>

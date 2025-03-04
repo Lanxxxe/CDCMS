@@ -1,0 +1,35 @@
+{% extends 'base_guardian.html' %}
+
+{% load static %}
+
+{% block title %}Guardian | Attendance{% endblock %}
+
+{% block content %}
+<div class="welcome-section">
+    <h3 class="mb-0">Attendance</h3>
+</div>
+
+<div class="container-fluid px-4">
+    <h4>Attendance for this Week</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-sm">
+            <thead class="">
+                <tr class="text-center table-head-columns">
+                    <th class="bg-primary text-white" scope="col">Student ID</th>
+                    <th class="bg-primary text-white" scope="col">Student Name</th>
+                    <th class="bg-primary text-white" scope="col">Date</th>
+                    <th class="bg-primary text-white" scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>test</td>
+                    <td>test</td>
+                    <td>test</td>
+                    <td>test</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
