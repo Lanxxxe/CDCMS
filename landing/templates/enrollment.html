@@ -47,7 +47,7 @@
 </div>
 
 <!-- Form Start -->
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     
     <div class="container bg-enrollment p-4 my-4 rounded">
@@ -56,14 +56,14 @@
             <h5 class="fw-bold">STUDENT BASIC INFORMATION</h5>
             <div class="row mt-2">
                 <div class="col">
-                    {{ form.lName.label_tag }}
+                    <span class="text-danger">*</span>{{ form.lName.label_tag }} 
                     {{ form.lName }}
                 </div>
                 <div class="col">
-                    {{ form.fName.label_tag }} {{ form.fName }}
+                    <span class="text-danger">*</span>{{ form.fName.label_tag }} {{ form.fName }}
                 </div>
                 <div class="col">
-                    {{ form.mName.label_tag }} {{ form.mName }}
+                    <span class="text-danger">*</span>{{ form.mName.label_tag }} {{ form.mName }}
                 </div>
                 <div class="col">
                     {{ form.suffix.label_tag }} {{ form.suffix }}
@@ -71,13 +71,13 @@
             </div>
             <div class="row mt-3">
                 <div class="col">
-                    {{ form.bDay.label_tag }} {{ form.bDay }}
+                    <span class="text-danger">*</span>{{ form.bDay.label_tag }} {{ form.bDay }}
                 </div>
                 <div class="col">
-                    {{ form.age.label_tag }} {{ form.age }}
+                    <span class="text-danger">*</span>{{ form.age.label_tag }} {{ form.age }}
                 </div>
                 <div class="col">
-                    {{ form.sex.label_tag }} {{ form.sex }}
+                    <span class="text-danger">*</span>{{ form.sex.label_tag }} {{ form.sex }}
                 </div>
                 <div class="col">
                     {{ form.healthHistory.label_tag }} {{ form.healthHistory }}
@@ -89,13 +89,13 @@
             <h5 class="fw-bold">ADDRESS</h5>
             <div class="row row-cols-4 mt-2">
                 <div class="col">
-                    {{ form.addressNumber.label_tag }} {{ form.addressNumber }}
+                    <span class="text-danger">*</span>{{ form.addressNumber.label_tag }} {{ form.addressNumber }}
                 </div>
                 <div class="col">
-                    {{ form.brgy.label_tag }} {{ form.brgy }}
+                    <span class="text-danger">*</span>{{ form.brgy.label_tag }} {{ form.brgy }}
                 </div>
                 <div class="col">
-                    {{ form.municipality.label_tag }} {{ form.municipality }}
+                    <span class="text-danger">*</span>{{ form.municipality.label_tag }} {{ form.municipality }}
                 </div>
             </div>
         </div>
@@ -105,16 +105,16 @@
             <p class="fw-bold mt-3">Father's Information</p>
             <div class="row">
                 <div class="col">
-                    {{ form.fatherLName.label_tag }} {{ form.fatherLName }}
+                    <span class="text-danger">*</span>{{ form.fatherLName.label_tag }} {{ form.fatherLName }}
                 </div>
                 <div class="col">
-                    {{ form.fatherFName.label_tag }} {{ form.fatherFName }}
+                    <span class="text-danger">*</span>{{ form.fatherFName.label_tag }} {{ form.fatherFName }}
                 </div>
                 <div class="col">
                     {{ form.fatherMName.label_tag }} {{ form.fatherMName }}
                 </div>
                 <div class="col">
-                    {{ form.fatherContactNo.label_tag }} {{ form.fatherContactNo }}
+                    <span class="text-danger">*</span>{{ form.fatherContactNo.label_tag }} {{ form.fatherContactNo }}
                 </div>
             </div>
             
@@ -122,52 +122,64 @@
             <p class="fw-bold mt-3">Mother's Maiden Name</p>
             <div class="row">
                 <div class="col">
-                    {{ form.motherLName.label_tag }} {{ form.motherLName }}
+                    <span class="text-danger">*</span>{{ form.motherLName.label_tag }} {{ form.motherLName }}
                 </div>
                 <div class="col">
-                    {{ form.motherFName.label_tag }} {{ form.motherFName }}
+                    <span class="text-danger">*</span>{{ form.motherFName.label_tag }} {{ form.motherFName }}
                 </div>
                 <div class="col">
                     {{ form.motherMName.label_tag }} {{ form.motherMName }}
                 </div>
                 <div class="col">
-                    {{ form.motherContactNo.label_tag }} {{ form.motherContactNo }}
+                    <span class="text-danger">*</span>{{ form.motherContactNo.label_tag }} {{ form.motherContactNo }}
                 </div>
             </div>
 
             <p class="fw-bold mt-4">Guardian's Information</p>
+            <div class="row mb-3">
+                <div class="col">
+                    <span class="text-danger">*</span>Guardian is:
+                    {% for radio in form.guardian_type %}
+                        <div class="form-check form-check-inline">
+                            {{ radio.tag }}
+                            <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                {{ radio.choice_label }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
-                    {{ form.guardianLName.label_tag }} {{ form.guardianLName }}
+                    <span class="text-danger">*</span>{{ form.guardianLName.label_tag }} {{ form.guardianLName }}
                 </div>
                 <div class="col">
-                    {{ form.guardianFName.label_tag }} {{ form.guardianFName }}
+                    <span class="text-danger">*</span>{{ form.guardianFName.label_tag }} {{ form.guardianFName }}
                 </div>
                 <div class="col">
                     {{ form.guardianMName.label_tag }} {{ form.guardianMName }}
                 </div>
                 <div class="col">
-                    {{ form.guardianContactNo.label_tag }} {{ form.guardianContactNo }}
+                    <span class="text-danger">*</span>{{ form.guardianContactNo.label_tag }} {{ form.guardianContactNo }}
                 </div>
             </div>
             <div class="row row-cols-4 mt-3">
                 <div class="col">
-                    {{ form.guardianRelationship.label_tag }} {{ form.guardianRelationship }}
+                    <span class="text-danger">*</span>{{ form.guardianRelationship.label_tag }} {{ form.guardianRelationship }}
                 </div>
                 <div class="col">
-                    {{ form.guardianEmail.label_tag }} {{ form.guardianEmail }}
+                    <span class="text-danger">*</span>{{ form.guardianEmail.label_tag }} {{ form.guardianEmail }}
                 </div>
                 <div class="col">
-                    {{ form.guardianOccupation.label_tag }} {{ form.guardianOccupation }}
+                    <span class="text-danger">*</span>{{ form.guardianOccupation.label_tag }} {{ form.guardianOccupation }}
                 </div>
             </div>
-        </div>
 
         <div class="mt-4">
             <h5 class="fw-bold">ENROLLMENT INFORMATION</h5>
             <div class="row row-cols-4">
                 <div class="col">
-                    {{ form.schedule.label_tag }} {{ form.schedule }}
+                    <span class="text-danger">*</span>{{ form.schedule.label_tag }} {{ form.schedule }}
                 </div>
             </div>
         </div>
@@ -177,16 +189,16 @@
             <h5 class="fw-bold">REQUIREMENTS</h5>
             <div class="row row-cols-4">
                 <div class="col">
-                    {{ form.psa.label_tag }} {{ form.psa }}
+                    <span class="text-danger">*</span>{{ form.psa.label_tag }} {{ form.psa }}
                 </div>
                 <div class="col">
-                    {{ form.immunization_card.label_tag }} {{ form.immunization_card }}
+                    {{ form.immunizationCard.label_tag }} {{ form.immunizationCard }}
                 </div>
                 <div class="col">
-                    {{ form.recent_photo.label_tag }} {{ form.recent_photo }}
+                    {{ form.recentPhoto.label_tag }} {{ form.recentPhoto }}
                 </div>
                 <div class="col">
-                    {{ form.guardian_qc_id.label_tag }} {{ form.guardian_qc_id }}
+                    <span class="text-danger">*</span>{{ form.guardianQCID.label_tag }} {{ form.guardianQCID }}
                 </div>
             </div>
         </div>
@@ -194,4 +206,73 @@
         <button type="submit" class="btn btn-primary d-block w-100 mt-5">Submit</button>
     </div>
 </form>
+
+    <script>      
+        const validateContactNumber = () => {
+            this.value = this.value.replace(/[^0-9]/g, ""); // Allow only numbers
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const guardianTypeRadios = document.querySelectorAll('input[name="guardian_type"]');
+            const guardianFields = {
+                'LName': document.getElementById('id_guardianLName'),
+                'FName': document.getElementById('id_guardianFName'),
+                'MName': document.getElementById('id_guardianMName'),
+                'ContactNo': document.getElementById('id_guardianContactNo')
+            };
+            const fatherFields = {
+                'LName': document.getElementById('id_fatherLName'),
+                'FName': document.getElementById('id_fatherFName'),
+                'MName': document.getElementById('id_fatherMName'),
+                'ContactNo': document.getElementById('id_fatherContactNo')
+            };
+            const motherFields = {
+                'LName': document.getElementById('id_motherLName'),
+                'FName': document.getElementById('id_motherFName'),
+                'MName': document.getElementById('id_motherMName'),
+                'ContactNo': document.getElementById('id_motherContactNo')
+            };
+        
+            function updateGuardianFields(guardianType) {
+                let sourceFields = guardianType === 'father' ? fatherFields :
+                                   guardianType === 'mother' ? motherFields : null;
+        
+                for (let field in guardianFields) {
+                    if (sourceFields) {
+                        guardianFields[field].value = sourceFields[field].value;
+                        guardianFields[field].readOnly = true;
+                    } else {
+                        guardianFields[field].value = '';
+                        guardianFields[field].readOnly = false;
+                    }
+                }
+        
+                // Update relationship field
+                const relationshipField = document.getElementById('id_guardianRelationship');
+                if (guardianType === 'father' || guardianType === 'mother') {
+                    relationshipField.value = 'Parent';
+                    relationshipField.readOnly = true;
+                } else {
+                    relationshipField.value = '';
+                    relationshipField.readOnly = false;
+                }
+            }
+        
+            guardianTypeRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    updateGuardianFields(this.value);
+                });
+            });
+        
+            // Initial update based on the default selection
+            updateGuardianFields(document.querySelector('input[name="guardian_type"]:checked').value);
+            document.getElementById('id_motherContactNo').addEventListener('input', validateContactNumber);
+            document.getElementById('id_guardianContactNo').addEventListener('input', validateContactNumber);
+            document.getElementById('id_fatherContactNo').addEventListener('input', validateContactNumber);
+            document.querySelector('form').addEventListener('submit', function(e) {
+                console.log('Form submitted');
+            });
+        });
+    </script>
+
 {% endblock %}

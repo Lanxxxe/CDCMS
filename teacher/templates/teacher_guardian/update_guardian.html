@@ -1,0 +1,57 @@
+{% extends 'base_teacher.html' %}
+{% load static %}
+
+{% block content %}
+<div class="welcome-section">
+    <h3 class="mb-0">Update Guardian Information</h3>
+</div>
+
+<div class="container px-4">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Relationship Field -->
+        <div class="mt-3">
+            {{ form.relationship.label_tag }}
+            {{ form.relationship }}
+        </div>
+
+        <!-- First Name Field -->
+        <div class="mt-3">
+            {{ form.firstName.label_tag }}
+            {{ form.firstName }}
+        </div>
+
+        <!-- Last Name Field -->
+        <div class="mt-3">
+            {{ form.lastName.label_tag }}
+            {{ form.lastName }}
+        </div>
+
+        <!-- Contact Number Field -->
+        <div class="mt-3">
+            {{ form.contact_number.label_tag }}
+            {{ form.contact_number }}
+        </div>
+
+        <!-- Email Field -->
+        <div class="mt-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{% url 'guardian_management' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        document.querySelector('#guardian_management').classList.toggle('active');
+    </script>
+{% endblock %}

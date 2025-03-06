@@ -1,0 +1,34 @@
+{% extends 'base_teacher.html' %}
+
+{% load static %}
+
+{% block title %}Teacher | Profile {% endblock %}
+
+{% block content %}
+<div class="welcome-section">
+    <h3 class="mb-0">Profile's Information</h3>
+</div>
+
+<div class="container-fluid d-flex align-items-center justify-content-center px-4 mt-5 ">
+    <div class="row gap-5  p-2 px-5 w-100">
+        <div class="col">
+            <img class="rounded img-fluid w-75 ms-5" src="{% static 'images/female.jpg' %}" height="" alt="">
+        </div>
+        <div class="col">
+            <div className="">
+                <p class="fs-5">Name: <span></span></p>
+                <p class="fs-5">Birth Date: <span></span></p>
+                <p class="fs-5">Age: <span></span></p>
+                <p class="fs-5">Gender: <span></span></p>
+                <p class="fs-5">Address: <span></span></p>
+                <p class="fs-5">Role: <span></span></p>
+                <p class="fs-5">Email: <span></span></p>
+                <div class="w-100 mt-4">
+                    <a href="" class="btn btn-primary btn-sm ms-auto d-block w-25" ><i class="bi bi-pencil-square"></i> Update</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

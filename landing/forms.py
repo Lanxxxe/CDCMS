@@ -1,4 +1,6 @@
+from django.core.validators import RegexValidator
 from django import forms
+
 
 class EnrollmentForm(forms.Form):
     lName = forms.CharField(
@@ -86,7 +88,7 @@ class EnrollmentForm(forms.Form):
     )
     fatherContactNo = forms.CharField(
         label="Father's Contact Number",
-        max_length=15,
+        max_length=11,
         required=True,
         widget=forms.TextInput(attrs={'class': 'form-control form-control-sm'})
     )
@@ -111,9 +113,16 @@ class EnrollmentForm(forms.Form):
     )
     motherContactNo = forms.CharField(
         label="Mother's Contact Number",
-        max_length=15,
+        max_length=11,
         required=True,
         widget=forms.TextInput(attrs={'class': 'form-control form-control-sm'})
+    )
+
+    guardian_type = forms.ChoiceField(
+        label="Guardian Type",
+        choices=[("father", "Father"), ("mother", "Mother"), ("other", "Other")],
+        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
+        initial="other"
     )
 
     guardianLName = forms.CharField(
@@ -136,7 +145,7 @@ class EnrollmentForm(forms.Form):
     )
     guardianContactNo = forms.CharField(
         label="Guardian's Contact Number",
-        max_length=15,
+        max_length=11,
         required=True,
         widget=forms.TextInput(attrs={'class': 'form-control form-control-sm'})
     )
@@ -165,22 +174,22 @@ class EnrollmentForm(forms.Form):
     )
 
     # File Upload Fields
-    psa = forms.FileField(
+    psa = forms.ImageField(
         label="PSA Birth Certificate",
         required=True,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control form-control-sm'})
     )
-    immunization_card = forms.FileField(
+    immunizationCard = forms.ImageField(
         label="Immunization Card",
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control form-control-sm'})
     )
-    recent_photo = forms.FileField(
+    recentPhoto = forms.ImageField(
         label="Recent Photo",
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control form-control-sm'})
     )
-    guardian_qc_id = forms.FileField(
+    guardianQCID = forms.ImageField(
         label="Guardian QC ID",
         required=True,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control form-control-sm'})

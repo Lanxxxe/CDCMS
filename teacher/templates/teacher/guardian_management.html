@@ -22,16 +22,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm mx-auto d-block"><i class="bi bi-pencil-square"></i> Update</button>
-                    </td>
-                </tr>
+                {% for guardian in guardians %}
+                    <tr>
+                        <td>{{ guardian.student.firstName }} {{ guardian.student.lastName }}</td>
+                        <td>{{ guardian.relationship }}</td>
+                        <td>{{ guardian.firstName }} {{ guardian.lastName }}</td>
+                        <td>{{ guardian.contact_number }}</td>
+                        <td>{{ guardian.email }}</td>
+                        <td>
+                            <a href="{% url 'update_guardian' guardian.id %}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil-square"></i> Update
+                            </a>
+                
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No guardian records found.</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

@@ -21,49 +21,49 @@
         </div>
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
-                <a href="{% url 'teacher_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <a href="{% url 'teacher_dashboard' %}" id="dashboard" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                     <i class="bi bi-speedometer2"></i>
                     <span class="nav-text">DASHBOARD</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'student_management' %}" class="nav-link {% if request.resolver_match.url_name == 'student_management' %}active{% endif %}">
+                <a href="{% url 'student_management' %}" id="student_management" class="nav-link {% if request.resolver_match.url_name == 'student_management' %}active{% endif %}">
                     <i class="bi bi-person"></i>
                     <span class="nav-text">Student Management</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'guardian_management' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_management' %}active{% endif %}">
+                <a href="{% url 'guardian_management' %}" id="guardian_management" class="nav-link {% if request.resolver_match.url_name == 'guardian_management' %}active{% endif %}">
                     <i class="bi bi-people"></i>
                     <span class="nav-text">Guardian Management</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'teacher_management' %}" class="nav-link {% if request.resolver_match.url_name == 'teacher_management' %}active{% endif %}">
+                <a href="{% url 'teacher_management' %}" id="teacher_management" class="nav-link {% if request.resolver_match.url_name == 'teacher_management' %}active{% endif %}">
                     <i class="bi bi-person-badge"></i>
                     <span class="nav-text">Teacher Management</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'announcement' %}" class="nav-link {% if request.resolver_match.url_name == 'announcement' %}active{% endif %}">
+                <a href="{% url 'announcement' %}" id="announcement" class="nav-link {% if request.resolver_match.url_name == 'announcement' %}active{% endif %}">
                     <i class="bi bi-megaphone"></i>
                     <span class="nav-text">Announcement</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'attendance' %}" class="nav-link {% if request.resolver_match.url_name == 'attendance' %}active{% endif %}">
+                <a href="{% url 'attendance' %}" id="attendance" class="nav-link {% if request.resolver_match.url_name == 'attendance' %}active{% endif %}">
                     <i class="bi bi-calendar-check"></i>
                     <span class="nav-text">Attendance</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'grades' %}" class="nav-link {% if request.resolver_match.url_name == 'grades' %}active{% endif %}">
+                <a href="{% url 'grades' %}" id="grades" class="nav-link {% if request.resolver_match.url_name == 'grades' %}active{% endif %}">
                     <i class="bi bi-card-list"></i>
                     <span class="nav-text">Grades</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'ai_recommendation' %}" class="nav-link {% if request.resolver_match.url_name == 'ai_recommendation' %}active{% endif %}">
+                <a href="{% url 'ai_recommendation' %}" id="ai_reco" class="nav-link {% if request.resolver_match.url_name == 'ai_recommendation' %}active{% endif %}">
                     <i class="bi bi-robot"></i>
                     <span class="nav-text">AI Reco</span>
                 </a>
@@ -80,7 +80,9 @@
             </button>
             <h5 class="mb-0 text-secondary">Child Development Center Management System</h5>
             <div class="profile">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-KVLAHEIOG04h1ACDyYV9kYMvkVBrLH.png" alt="Profile" class="profile-img">
+                <a href="{% url 'teacher_profile' %}">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-KVLAHEIOG04h1ACDyYV9kYMvkVBrLH.png" alt="Profile" class="profile-img">
+                </a>
             </div>
         </div>
 

@@ -1,0 +1,35 @@
+{% extends 'base_teacher.html' %}
+{% load static %}
+
+{% block content %}
+<div class="welcome-section">
+    <h3 class="mb-0">Delete Announcement</h3>
+</div>
+<div class="container px-4 d-flex align-items-center justify-content-center">
+    <div>
+        <div class="card p-2" style="width: 22rem;">
+            <h4>Preview</h4>
+            <img src="/asEASdwaSEAdWas/{{ announcement.picture}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ announcement.title }}</h5>
+                <p class="card-text">{{ announcement.description }}</p>
+            </div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <p class="fw-bold mt-2">Are you sure you want to delete?</p>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-danger me-1"><i class="bi bi-trash"></i> Yes</button>
+                <a href="{% url 'announcement' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block extra_js %}
+    <script>
+        document.querySelector('#announcement').classList.toggle('active');
+    </script>
+{% endblock %}
