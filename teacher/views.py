@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Case, When, Value, CharField, F, Q
 from django.db.models.functions import Concat
-from landing.models import Student, GuardianInfo, Enrollment, Announcement
+from django.http import JsonResponse
+from landing.models import Student, GuardianInfo, Enrollment, Announcement, Attendance
 from .forms import AnnouncementForm, GuardianInfoForm
+from datetime import date, datetime
 import sweetify
 
 def dashboard(request):
@@ -47,8 +49,6 @@ def student_management(request):
 
         # Step 3: Determine Requirements Status
         if enrollment_data:
-            # print(enrollment_data['psa'], enrollment_data['guardianQCID'],
-            #     enrollment_data['immunizationCard'], enrollment_data['recentPhoto'])
             # Check if all required files are present
             if (enrollment_data['psa'] and enrollment_data['guardianQCID'] and
                 enrollment_data['immunizationCard'] and enrollment_data['recentPhoto']):
@@ -62,7 +62,6 @@ def student_management(request):
     context = {
         'students': students_data
     }
-    print(students_data)
     return render(request, 'teacher/student_management.html', context)
 
 def guardian_management(request):
@@ -109,6 +108,7 @@ def update_guardian(request, id):
 def teacher_management(request):
     return render(request, 'teacher/teacher_management.html')
 
+
 def announcement(request):
     announcements = Announcement.objects.all().values(
         'id', 'posted_by', 'title', 'picture', 'upload_date', 'description', 'date_posted'
@@ -117,7 +117,6 @@ def announcement(request):
         'announcements' : announcements
     }
     return render(request, 'teacher/announcement.html', context)
-
 
 def add_announcement(request):
     if request.method == 'POST':
@@ -197,7 +196,49 @@ def delete_announcement(request, id):
 
 
 def attendance(request):
-    return render(request, 'teacher/attendance.html')
+    selected_date = request.GET.get('date', date.today())  # Get date from the request or use today
+
+    students = Student.objects.all()
+    student_data = []
+
+    for student in students:
+        # Fetch the latest attendance for the selected date
+        attendance = Attendance.objects.filter(student=student, date=selected_date).first()
+        status = attendance.status if attendance else "No Record"
+
+        student_data.append({
+            'id': student.id,
+            'student_id': student.student_id,
+            'firstName': student.firstName,
+            'lastName': student.lastName,
+            'status': status
+        })
+    return render(request, 'teacher/attendance.html', {'students': student_data, 'selected_date': selected_date})
+
+def change_attendance(request):
+    if request.method == "POST":
+        student_id = request.POST.get('student_id')
+        status = request.POST.get('status')
+        selected_date = request.POST.get('date')
+
+        # Validate date format
+        try:
+            selected_date = datetime.strptime(selected_date, "%Y-%m-%d").date()
+        except ValueError:
+            return JsonResponse({'success': False, 'message': 'Invalid date format. Use YYYY-MM-DD'})
+
+        student = get_object_or_404(Student, id=student_id)
+
+        # ✅ Update or create the attendance record
+        attendance, created = Attendance.objects.update_or_create(
+            student=student,
+            date=selected_date,
+            defaults={'status': status}
+        )
+
+        return JsonResponse({'success': True, 'status': status, 'updated': not created})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 def grades(request):
     return render(request, 'teacher/grades.html')

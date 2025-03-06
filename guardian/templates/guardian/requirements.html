@@ -9,13 +9,27 @@
 </div>
 
 <div class="container-fluid px-4">
+  {% for key, value in requirements.items %}
     <div class="card mb-3 py-4">
-        <img src="{% static 'images/announcement.png' %}" class="card-img-top img-container img-fluid object-fit-cover rounded mx-auto" style="height: 500px; width: 500px;" alt="">
+        {% if value %}
+            <img src="{{ value.url }}" class="card-img-top img-container img-fluid object-fit-cover rounded mx-auto" 
+                style="height: 500px; width: 500px;" alt="{{ key }}">
+        {% else %}
+            <img src="{% static 'images/noDocument.jpg' %}" class="card-img-top img-container img-fluid object-fit-cover rounded mx-auto"
+                style="height: 500px; width: 500px;" alt="No Document">
+        {% endif %}
+        
         <div class="card-body">
-            <h5 class="card-title">PSA</h5>
-          <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-          <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
+          <div class="d-flex justify-content-between align-items-center pe-5">
+              <h5 class="card-title">{{ key }}</h5>
+                {% if value %}
+                    <a href="{% url 'add_requirement' student_id key %}" class="btn btn-warning">Update</a>
+                {% else %}
+                    <a href="{% url 'add_requirement' student_id key %}" class="btn btn-success">Add</a>
+                {% endif %}
+            </div>
         </div>
-      </div>
+    </div>
+  {% endfor %}
 </div>
 {% endblock %}

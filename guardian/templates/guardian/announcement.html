@@ -9,13 +9,17 @@
 </div>
 
 <div class="container-fluid px-4">
-    <div class="card mb-3 py-4">
-        <img src="{% static 'images/announcement.png' %}" class="card-img-top img-container img-fluid object-fit-cover rounded mx-auto" style="height: 500px; width: 500px;" alt="">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
-        </div>
+  {% for announcement in announcements %}
+  <div class="card mb-3 py-4 w-75 mx-auto" >
+      <img src="/asEASdwaSEAdWas/{{ announcement.picture}}" class="card-img-top img-container img-fluid object-fit-contain rounded mx-auto" style="height: 500px; width: 500px;" alt="">
+      <div class="card-body">
+        <h5 class="card-title">{{ announcement.title }}</h5>
+        <p class="card-text">{{ announcement.description }}</p>
+        <p class="card-text"><small class="text-body-secondary">{{ announcement.upload_date }}</small></p>
       </div>
+  </div>
+
+  {% endfor %}
+    
 </div>
 {% endblock %}

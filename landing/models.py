@@ -5,13 +5,14 @@ import re, uuid, os
 
 def secure_file_path(instance, filename):
     student_name = f"{instance.student.firstName}_{instance.student.lastName}".replace(" ", "_")
-    # Generate a UUID for the folder name
-    folder_name = uuid.uuid4().hex
-    # Generate a UUID for the filename
+    requirement = instance._meta.get_field(instance.field.name).name  # Get the field name (psa, recentPhoto, etc.)
+    
+    # Generate a unique filename
     ext = filename.split('.')[-1]
-    filename = f"{student_name}{uuid.uuid4().hex}.{ext}"
-    # Create a path with multiple nested folders
-    return os.path.join('secure_files', folder_name[:4], student_name, filename)
+    unique_filename = f"{student_name}_{uuid.uuid4().hex}.{ext}"
+
+    # Return structured path
+    return os.path.join('secure_files', student_name, requirement, unique_filename)
 
 
 def validate_ph_contact(value):
@@ -117,7 +118,9 @@ class Announcement(models.Model):
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, db_column="student_id")
+    date = models.DateField()  # Ensures each entry has a date
     status = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'attendance'
+        unique_together = ('student', 'date')

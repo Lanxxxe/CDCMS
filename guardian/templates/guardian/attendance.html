@@ -22,12 +22,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>test</td>
-                </tr>
+                {% for record in attendance_records %}
+                    <tr >
+                        <td class="px-2">{{ record.student__student_id }}</td>
+                        <td>{{ record.student__lastName }}, {{ record.student__firstName }} {{ record.student__middleName }} </td>
+                        <td>{{ record.date|date:"Y-m-d" }}</td>
+                        <td>{{ record.status }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No attendance records found for this week.</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
