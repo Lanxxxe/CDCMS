@@ -1,8 +1,35 @@
 {% extends 'base_guardian.html' %}
 
-{% block title %}Guardian Dashboard{% endblock %}
+{% block title %}Guardian | Grades{% endblock %}
 
 {% block content %}
-    <p>Welcome, Guardian!</p>
-    <p>Grades</p>
+<div class="welcome-section">
+    <h3 class="mb-0">Grades</h3>
+</div>
+
+<div class="container-fluid px-4">
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th class="bg-primary text-white" scope="col">Student ID</th>
+                <th class="bg-primary text-white" scope="col">Full Name</th>
+                <th class="bg-primary text-white" scope="col">1st Evaluation (SS)</th>
+                <th class="bg-primary text-white" scope="col">2nd Evaluation (SS)</th>
+                <th class="bg-primary text-white" scope="col">Recommendation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Student ID</td>
+                <td>Mark Martin</td>
+                <td>4</td>
+                <td>8</td>
+                <td>
+                    <a href="" class="btn btn-primary btn-sm"><i class="bi bi-robot"></i> View</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 {% endblock %}

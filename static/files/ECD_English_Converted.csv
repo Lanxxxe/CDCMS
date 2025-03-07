@@ -1,0 +1,22 @@
+Domain,Skill,BoSY_Score,EoSY_Score
+Social-Emotional,Shares toys with others,2,3
+Social-Emotional,Comforts playmates in distress,1,2
+Social-Emotional,Cooperates with adults,3,4
+Cognitive,Identifies feelings in others,2,3
+Cognitive,Matches colors,3,4
+Cognitive,Sorts objects based on attributes,3,4
+Fine Motor,Draws geometric forms,2,3
+Fine Motor,Scribbles spontaneously,2,3
+Fine Motor,Copies shapes,3,4
+Gross Motor,Walks upstairs without handrail,1,2
+Gross Motor,Jumps and turns,2,3
+Gross Motor,Throws ball overhead,2,3
+Self-Help,Feeds self using spoon,3,4
+Self-Help,Washes face without help,2,3
+Self-Help,Bathes without help,2,3
+Expressive Language,Uses two-word sentences,2,3
+Expressive Language,Asks 'what' questions,3,4
+Expressive Language,Names objects in pictures,3,4
+Receptive Language,Points to named objects,2,3
+Receptive Language,Follows two-step instructions,3,4
+Receptive Language,Understands opposites,3,4

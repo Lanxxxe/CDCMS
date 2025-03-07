@@ -214,6 +214,11 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const guardianTypeRadios = document.querySelectorAll('input[name="guardian_type"]');
+            const bDayInput = document.getElementById("id_bDay");
+            const ageInput = document.getElementById("id_age");
+            const municipality = document.getElementById("id_municipality");
+
+
             const guardianFields = {
                 'LName': document.getElementById('id_guardianLName'),
                 'FName': document.getElementById('id_guardianFName'),
@@ -272,7 +277,31 @@
             document.querySelector('form').addEventListener('submit', function(e) {
                 console.log('Form submitted');
             });
+
+            bDayInput.addEventListener("change", function() {
+                const bDay = new Date(this.value);
+                const today = new Date();
+                let age = today.getFullYear() - bDay.getFullYear();
+                const monthDiff = today.getMonth() - bDay.getMonth();
+
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < bDay.getDate())) {
+                    age--;
+                }
+
+                if (age >= 3 && age <= 5) {
+                    ageInput.value = age;
+                } else {
+                    alert("Age should be 3 or 5 years old.");
+                    bDayInput.value = "";
+                    ageInput.value = "";
+                }
+            });
+
+            municipality.value = "Quezon City";
+            municipality.readOnly = true;
         });
+
+
     </script>
 
 {% endblock %}

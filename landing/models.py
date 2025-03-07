@@ -5,15 +5,12 @@ import re, uuid, os
 
 def secure_file_path(instance, filename):
     student_name = f"{instance.student.firstName}_{instance.student.lastName}".replace(" ", "_")
-    requirement = instance._meta.get_field(instance.field.name).name  # Get the field name (psa, recentPhoto, etc.)
+    requirement = instance._meta.get_field(instance._meta.get_fields()[-1].name).name  # Gets the last field
     
-    # Generate a unique filename
     ext = filename.split('.')[-1]
-    unique_filename = f"{student_name}_{uuid.uuid4().hex}.{ext}"
-
-    # Return structured path
-    return os.path.join('secure_files', student_name, requirement, unique_filename)
-
+    unique_filename = f"{student_name}_{requirement}.{ext}"
+    
+    return os.path.join('secure_files', student_name, requirement, unique_filename)     
 
 def validate_ph_contact(value):
     """ Ensure number starts with '09' and has exactly 11 digits. """

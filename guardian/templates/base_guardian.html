@@ -46,19 +46,13 @@
             </li>
             <li class="nav-item">
                 <a href="{% url 'guardian_teachers_profile' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_teachers_profile' %}active{% endif %}">
-                    <i class="bi bi-megaphone"></i>
+                    <i class="bi bi-file-person"></i>
                     <span class="nav-text">Teacher's Profile</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'guardian_ai_recommendation' %}" class="nav-link {% if request.resolver_match.url_name == 'guardian_ai_recommendation' %}active{% endif %}">
-                    <i class="bi bi-calendar-check"></i>
-                    <span class="nav-text">A.I. Recommendation</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a href="" class="nav-link">
-                    <i class="bi bi-calendar-check"></i>
+                    <i class="bi bi-box-arrow-in-left"></i>
                     <span class="nav-text">Logout</span>
                 </a>
             </li>

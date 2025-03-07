@@ -1,6 +1,5 @@
-from django.core.validators import RegexValidator
 from django import forms
-
+from datetime import date
 
 class EnrollmentForm(forms.Form):
     lName = forms.CharField(
@@ -29,11 +28,19 @@ class EnrollmentForm(forms.Form):
     )
     bDay = forms.DateField(
         label="Birthdate",
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-sm'})
+        widget=forms.DateInput(attrs={
+            'type': 'date', 
+            'class': 'form-control form-control-sm',
+            'min': '2020-01-01',
+            'max': '2021-12-31'
+        })
+    
     )
     age = forms.IntegerField(
         label="Age",
-        widget=forms.NumberInput(attrs={'class': 'form-control form-control-sm'})
+        widget=forms.NumberInput(attrs={'class': 'form-control form-control-sm'}),
+        required=False
+    
     )
     sex = forms.ChoiceField(
         label="Sex",
@@ -194,3 +201,37 @@ class EnrollmentForm(forms.Form):
         required=True,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control form-control-sm'})
     )
+
+    def clean_bDay(self):
+        bday = self.cleaned_data.get('bDay')
+        if bday:
+            if not (date(2020, 1, 1) <= bday <= date(2021, 12, 31)):
+                raise forms.ValidationError("Birth year should be between 2020 and 2021.")
+        return bday
+
+    def clean_age(self):
+        bday = self.cleaned_data.get('bDay')
+        if bday:
+            today = date.today()
+            age = today.year - bday.year - ((today.month, today.day) < (bday.month, bday.day))
+            if age not in [3, 5]:
+                raise forms.ValidationError("Age should be 3 or 5 years old.")
+            return age
+        return None  # Auto-filled in the frontend
+
+    def clean_municipality(self):
+        municipality = self.cleaned_data.get('municipality')
+        if municipality.lower() != "quezon city":
+            raise forms.ValidationError("Municipality should be 'Quezon City'.")
+        return municipality
+    
+
+
+
+
+
+
+
+
+
+    
