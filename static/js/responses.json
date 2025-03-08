@@ -1,6 +1,6 @@
 {
     "hello": "Hello! Welcome to our Child Development Center. How can I assist you today?",
-    "hi": "Hi there! How can I help you with your child's needs?",
+    "hi": "Hi there! How can I help you with you?",
     
     "admission": "We accept children from 6 to 13 and offer a simple enrollment process. You can <a href='/enroll' target='_blank'>apply online</a> or <a href='https://maps.app.goo.gl/iXuW8WcwxJthN2X66' target='_blank'>visit us</a> for a tour.",
     "requirements": "For enrollment, we require birth certificates, medical records, and emergency contact details, <a href='/enroll' target='_blank'>Click here to see full details</a>.",
