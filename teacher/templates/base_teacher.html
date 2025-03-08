@@ -21,6 +21,9 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">   
     <!-- <link rel="stylesheet" href="{% static 'css/bootstrap5.0.1.min.css' %}">    -->
+    <!-- Chat CSS -->
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    <script src="{% static 'js/chat.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     {% block extra_css %}{% endblock %}
@@ -115,9 +118,10 @@
 
         <ul class="nav">
           <li class="nav-item">
-            <section class="nav-link text-muted my-2 circle-icon" href="#" data-toggle="modal" data-target=".modal-shortcut">
+            <section class="nav-link text-muted my-2 circle-icon" id="chatToggle">
               <span class="fe fe-message-circle fe-16"></span>
             </section>
+            {% include 'chat.html' %}
           </li>
 
 
