@@ -1,0 +1,32 @@
+{
+    "hello": "Hello! Welcome to our Child Development Center. How can I assist you today?",
+    "hi": "Hi there! How can I help you with your child's needs?",
+    
+    "admission": "We accept children from 6 to 13 and offer a simple enrollment process. You can apply online or visit us for a tour.",
+    "requirements": "For enrollment, we require birth certificates, medical records, and emergency contact details. Let me know if you need a full list.",
+    "fees": "Our tuition and fees vary based on the program and schedule.",
+    "payment options": "We accept various payment methods, including online payments and installment plans.",
+    
+    "programs": "We offer early childhood education, daycare, and after-school care.",
+    "daily schedule": "A typical day includes learning activities, playtime, meals, and rest periods.",
+    "curriculum": "Our curriculum focuses on cognitive, social, and motor skill development through play-based learning.",
+    
+    "safety": "We prioritize safety with secure entry systems, trained staff, and health protocols.",
+    "health protocols": "We follow strict health guidelines, including regular sanitation, temperature checks, and emergency medical procedures.",
+    "food and nutrition": "We provide balanced meals and snacks, accommodating dietary restrictions and allergies.",
+    
+    "teachers": "Our caregivers and educators are highly qualified and experienced in early childhood development.",
+    "staff qualifications": "All our staff members are certified in child development and first aid. Let me know if you’d like to see credentials or training details.",
+    
+    "portal": "Our <a href='/guardian' target='_blank'>parent portal</a> allows you to check attendance, progress reports, and daily activities.",
+    "communication": "We keep parents updated through newsletters, messaging, and meetings.",
+    
+    "contact": "You can reach us at <a href='mailto:support@childcenter'>support@childcenter.com</a> or call (+63) 987-456-6543.",
+    "email": "You can reach us at <a href='mailto:support@childcenter'>support@childcenter.com</a> or call (+63) 987-456-6543.",
+    "facebook": "You can visit our facebook page <a href='https://www.facebook.com' target='_blank'>here</a>",
+    
+    "thanks": "You're welcome! Let me know if you have any more questions.",
+    "bye": "Thank you for reaching out. Have a wonderful day!",
+    
+    "default": "I'm sorry, I didn’t quite understand that. Could you please clarify or ask in a different way?"
+}
