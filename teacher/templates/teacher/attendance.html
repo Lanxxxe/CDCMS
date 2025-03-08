@@ -10,8 +10,10 @@
 
 <div class="container-fluid px-4">
     <!-- Date Picker -->
-    <label for="attendance-date">Select Date:</label>
-    <input type="date" id="attendance-date" class="form-control w-25" value="{{ selected_date }}">
+     <div class="d-flex align-items-center justify-content-start gap-2 mt-3">
+         <label for="attendance-date" style="margin-right: 8px;">Select Date:</label>
+         <input type="date" id="attendance-date" class="form-control w-25" value="{{ selected_date }}">
+     </div>
 
     <table class="table table-bordered mt-3">
         <thead>

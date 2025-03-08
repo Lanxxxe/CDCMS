@@ -7,6 +7,9 @@ from .forms import AnnouncementForm, GuardianInfoForm
 from datetime import date, datetime
 import sweetify
 
+def main(request):
+    return render(request, 'old.html')
+
 def dashboard(request):
     student_count = Student.objects.count()
     print(student_count)

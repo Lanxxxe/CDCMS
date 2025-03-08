@@ -4,6 +4,7 @@ from django.urls import path, include
 from teacher.views import *
 
 urlpatterns = [
+    path("main", main , name="main"),
     path('', dashboard, name='teacher_dashboard'),
     path('student-management/', student_management, name='student_management'),
     path('profile/', profile, name='teacher_profile'),
@@ -16,7 +17,8 @@ urlpatterns = [
     path('announcements/update/<int:id>/', update_announcement, name='update_announcement'),
     path('announcements/delete/<int:id>/', delete_announcement, name='delete_announcement'),
     path('attendance/', attendance, name='attendance'),
-    path('change_attendance/', change_attendance, name='change_attendance'),    path('grades/', grades, name='grades'),
+    path('change_attendance/', change_attendance, name='change_attendance'),    
+    path('grades/', grades, name='grades'),
     path('ai_recommendation/', ai_recommendation, name='ai_recommendation'),
 ]
 
