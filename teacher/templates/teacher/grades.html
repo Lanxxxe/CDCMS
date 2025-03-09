@@ -4,8 +4,19 @@
 
 {% block content %}
 <!-- Welcome Section -->
-<div class="welcome-section">
+<div class="welcome-section d-flex justify-content-between align-items-center">
     <h3 class="mb-0">Grades</h3>
+    <form class="mr-3" method="get">
+        <label for="kinder_level">Filter by Kinder Level:</label>
+        <select name="kinder_level" id="kinder_level" onchange="this.form.submit()">
+            <option value="">All Levels</option>
+            {% for level in kinder_levels %}
+                <option value="{{ level }}" {% if level == selected_level %}selected{% endif %}>
+                    {{ level }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
 </div>
 
 <div class="container-fluid px-4">
@@ -14,6 +25,7 @@
         <thead>
             <tr>
                 <th class="bg-primary text-white" scope="col">Student ID</th>
+                <th class="bg-primary text-white" scope="col">Kinder Level</th>
                 <th class="bg-primary text-white" scope="col">Full Name</th>
                 <th class="bg-primary text-white" scope="col">1st Evaluation (SS)</th>
                 <th class="bg-primary text-white" scope="col">2nd Evaluation (SS)</th>
@@ -21,15 +33,35 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Student ID</td>
-                <td>Mark Martin</td>
-                <td>4</td>
-                <td>8</td>
-                <td>
-                    <a href="" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Update</a>
-                </td>
-            </tr>
+            {% for student_data in students %}
+                <tr>
+                    <td>{{ student_data.student.student_id }}</td>
+                    <td>{{ student_data.student.enrollment.first.schedule }}</td>
+                    <td>{{ student_data.student.firstName }} {{ student_data.student.lastName }}</td>
+                    <td>
+                        {% if student_data.first_total %}
+                            {{ student_data.first_total }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if student_data.second_total %}
+                            {{ student_data.second_total }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'view_student_grades' student_data.student.student_id %}" class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-eye"></i> View
+                        </a>
+                        <a href="{% url 'update_student_grades' student_data.student.student_id %}" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-edit"></i> Update
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>

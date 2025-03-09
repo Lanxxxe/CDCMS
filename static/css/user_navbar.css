@@ -35,6 +35,9 @@ body {
 }
 
 .dashboard-card {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   background-color: var(--card-bg);
   border-radius: 5px;
   padding: 20px;

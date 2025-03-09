@@ -102,7 +102,6 @@
       </div>
   </div>
     
- 
   <body class="vertical  light">
     <div class="wrapper">
       <nav class="topnav navbar navbar-light">
@@ -199,7 +198,7 @@
               </li>
             </ul>
 
-            <ul class="navbar-nav flex-fill w-100 mb-2 {% if request.resolver_match.url_name == 'guardian_management' %}active{% endif %}">
+            <ul id="guardian_management" class="navbar-nav flex-fill w-100 mb-2 {% if request.resolver_match.url_name == 'guardian_management' %}active{% endif %}">
               <li class="nav-item w-100">
                 <a class="nav-link" href="{% url 'guardian_management' %}">
                 <i class="fa-solid fa-people-roof"></i>
@@ -217,7 +216,7 @@
               </li>
             </ul>
 
-            <ul class="navbar-nav flex-fill w-100 mb-2 {% if request.resolver_match.url_name == 'announcement' %}active{% endif %}">
+            <ul class="navbar-nav flex-fill w-100 mb-2 {% if request.resolver_match.url_name == 'announcement' %}active{% endif %}" id="announcement">
               <li class="nav-item w-100">
                 <a class="nav-link" href="{% url 'announcement' %}">
                 <i class="fa-solid fa-bullhorn"></i>
@@ -226,7 +225,7 @@
               </li>
             </ul>
 
-            <ul class="navbar-nav flex-fill w-100 mb-2 {% if request.resolver_match.url_name == 'attendance' %}active{% endif %}">
+            <ul class="navbar-nav flex-fill w-100 mb-2 {% if request.resolver_match.url_name == 'attendance' %}active{% endif %}" id="attendance">
               <li class="nav-item w-100">
                 <a class="nav-link" href="{% url 'attendance' %}">
                 <i class="fa-solid fa-clipboard-user"></i>
@@ -235,7 +234,7 @@
               </li>
             </ul>
 
-            <ul class="navbar-nav flex-fill w-100 mb-2 {% if request.resolver_match.url_name == 'grades' %}active{% endif %}">
+            <ul class="navbar-nav flex-fill w-100 mb-2 {% if request.resolver_match.url_name == 'grades' %}active{% endif %}" id="grades">
               <li class="nav-item w-100">
                 <a class="nav-link" href="{% url 'grades' %}">
                 <i class="fa-solid fa-newspaper"></i>
@@ -302,11 +301,9 @@
         </div>
       </main>
       
-  {% load sweetify %}
-  {% sweetify %}
+
   <!-- Include jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/popper.min.js' %}"></script>
   <script src="{% static 'js/moment.min.js' %}"></script>
@@ -333,9 +330,12 @@
   <script src="{% static 'js/apps.js' %}"></script>
   <script src="{% static 'js/preloader.js' %}"></script>
   <script src="{% static 'js/jquery-3.6.0.min.js' %}" crossorigin="anonymous"></script>
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
+  <!-- <script src="{% static 'js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script> -->
   <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
   <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+
+  {% load sweetify %}
+  {% sweetify %}
   {% block extra_js %}{% endblock %}
   </body>
 </html>

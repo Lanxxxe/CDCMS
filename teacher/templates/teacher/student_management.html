@@ -30,7 +30,7 @@
                         <td>{{ student.guardian_name }}</td>
                         <td>{{ student.healthHistory }}</td>
                         <td>{{ student.enrollment__schedule }}</td>
-                        <td>{{ student.requirements_status }}</td>
+                        <td class="{% if student.requirements_status == 'Incomplete' %}text-danger{% else %}text-success {%  endif%}">{{ student.requirements_status }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

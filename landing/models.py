@@ -22,9 +22,9 @@ def validate_ph_contact(value):
 class Student(models.Model):
     id = models.AutoField(primary_key=True)  # Matches MySQL schema
     student_id = models.CharField(max_length=20, unique=True)
-    firstName = models.CharField(max_length=50)
+    firstName = models.CharField(max_length=50, blank=False, null=False)
     middleName = models.CharField(max_length=50, blank=True, null=True)
-    lastName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50, blank=False, null=False)
     suffix = models.CharField(max_length=10, blank=True, null=True)
     birthdate = models.DateField()
     age = models.IntegerField()
@@ -39,9 +39,9 @@ class Student(models.Model):
 class StudentAddress(models.Model):
     id = models.AutoField(primary_key=True)
     student = models.OneToOneField(Student, on_delete=models.CASCADE, db_column="student_id")  # ForeignKey match
-    address_no = models.CharField(max_length=100)
-    baranggay = models.CharField(max_length=100)
-    municipality = models.CharField(max_length=100)
+    address_no = models.CharField(max_length=100, blank=False, null=False)
+    baranggay = models.CharField(max_length=100, blank=False, null=False)
+    municipality = models.CharField(max_length=100, blank=False, null=False)
 
     class Meta:
         db_table = 'student_address'
@@ -50,10 +50,10 @@ class StudentAddress(models.Model):
 class FatherInfo(models.Model):
     id = models.AutoField(primary_key=True)
     student = models.OneToOneField(Student, on_delete=models.CASCADE, db_column="student_id")
-    firstName = models.CharField(max_length=50)
+    firstName = models.CharField(max_length=50, blank=False, null=False)
     middleName = models.CharField(max_length=50, blank=True, null=True)
-    lastName = models.CharField(max_length=50)
-    contact_number = models.BigIntegerField(validators=[MinLengthValidator(11)])
+    lastName = models.CharField(max_length=50, blank=False, null=False)
+    contact_number = models.CharField(max_length=15, validators=[MinLengthValidator(11)])
 
     class Meta:
         db_table = 'father_info'
@@ -62,10 +62,10 @@ class FatherInfo(models.Model):
 class MotherInfo(models.Model):
     id = models.AutoField(primary_key=True)
     student = models.OneToOneField(Student, on_delete=models.CASCADE, db_column="student_id")
-    firstName = models.CharField(max_length=50)
+    firstName = models.CharField(max_length=50, blank=False, null=False)
     middleName = models.CharField(max_length=50, blank=True, null=True)
-    lastName = models.CharField(max_length=50)
-    contact_number = models.BigIntegerField(validators=[MinLengthValidator(11)])
+    lastName = models.CharField(max_length=50, blank=False, null=False)
+    contact_number = models.CharField(max_length=15, validators=[MinLengthValidator(11)])
 
     class Meta:
         db_table = 'mother_info'
@@ -74,13 +74,13 @@ class MotherInfo(models.Model):
 class GuardianInfo(models.Model):
     id = models.AutoField(primary_key=True)
     student = models.OneToOneField(Student, on_delete=models.CASCADE, db_column="student_id")
-    firstName = models.CharField(max_length=50)
-    middleName = models.CharField(max_length=50, blank=True, null=True)
-    lastName = models.CharField(max_length=50)
-    relationship = models.CharField(max_length=50)
-    contact_number = models.BigIntegerField(validators=[MinLengthValidator(11)])
-    email = models.EmailField(blank=True, null=True)
-    occupation = models.CharField(max_length=100, blank=True, null=True)
+    firstName = models.CharField(max_length=50, blank=False, null=False)
+    middleName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50, blank=False, null=False)
+    relationship = models.CharField(max_length=50, blank=False, null=False)
+    contact_number = models.CharField(max_length=15, validators=[MinLengthValidator(11)], blank=False, null=True)
+    email = models.EmailField(blank=False, null=False)
+    occupation = models.CharField(max_length=100, blank=False, null=False)
 
     class Meta:
         db_table = 'guardian_info'
@@ -88,7 +88,7 @@ class GuardianInfo(models.Model):
 
 class Enrollment(models.Model):
     id = models.AutoField(primary_key=True)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, db_column="student_id")
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, db_column="student_id", related_name="enrollment")
     schedule = models.TextField()
     psa = models.ImageField(upload_to=secure_file_path)
     immunizationCard = models.ImageField(upload_to=secure_file_path, blank=True, null=True)
@@ -121,3 +121,64 @@ class Attendance(models.Model):
     class Meta:
         db_table = 'attendance'
         unique_together = ('student', 'date')
+
+
+class StudentEvaluation(models.Model):
+    EVALUATION_PERIOD_CHOICES = [
+        ('First', 'First Evaluation'),
+        ('Second', 'Second Evaluation'),
+    ]
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="evaluations")
+    evaluation_period = models.CharField(max_length=10, choices=EVALUATION_PERIOD_CHOICES)  # Match ENUM values!
+
+    gross_motor_score = models.IntegerField()
+    fine_motor_score = models.IntegerField()
+    self_help_score = models.IntegerField()
+    receptive_language_score = models.IntegerField()
+    expressive_language_score = models.IntegerField()
+    cognitive_score = models.IntegerField()
+    socio_emotional_score = models.IntegerField()
+
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'student_evaluation'
+        unique_together = ('student', 'evaluation_period')
+
+ 
+class Recommendation(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='recommendations')
+    evaluation_period = models.CharField(max_length=20)
+    recommendation = models.TextField()
+
+    class Meta:
+        db_table = 'recommendation' 
+        unique_together = ('student', 'evaluation_period')
+
+class StandardScore(models.Model):
+    SEMESTER_CHOICES = [
+        ('First', 'First Semester'),
+        ('Second', 'Second Semester'),
+    ]
+
+    semester = models.CharField(max_length=10, choices=SEMESTER_CHOICES, unique=True)
+
+    gross_motor = models.IntegerField()
+    fine_motor = models.IntegerField()
+    self_help = models.IntegerField()
+    receptive_language = models.IntegerField()
+    expressive_language = models.IntegerField()
+    cognitive = models.IntegerField()
+    socio_emotional = models.IntegerField()
+
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'standard_scores'
+
+    def __str__(self):
+        return f"Standard Scores - {self.semester}"
+
+
+

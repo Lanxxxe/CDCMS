@@ -8,8 +8,8 @@ from django.http import FileResponse, Http404
 from django.db import transaction
 from .forms import EnrollmentForm
 from .models import Student, StudentAddress, FatherInfo, MotherInfo, GuardianInfo, Enrollment
-import uuid
 from datetime import datetime
+import uuid, re
 import sweetify
 
 def home(request):
@@ -25,15 +25,17 @@ def enroll(request):
             
             try:                
                 with transaction.atomic():
-                    current_year = datetime.now().year
-                    next_year = current_year + 1  # Example: 2024 -> 2025
-                    school_year = f"AY{str(current_year)[-2:]}{str(next_year)[-2:]}"  # AY2425
+                    last_student = Student.objects.filter(student_id__startswith="AY2425").order_by('-student_id').first()
 
-                    # Get the Next Student Number (Count Students + 1)
-                    student_count = Student.objects.count() + 1  # Example: If 5 students exist, next is 6
-                    student_number = f"{student_count:02d}"  # Formats to '01', '02', '03', etc.
+                    if last_student:
+                        # Extract the number part from the student_id (e.g., "AY2425-05" -> 5)
+                        match = re.search(r"-(\d+)$", last_student.student_id)
+                        last_number = int(match.group(1)) if match else 0
+                        next_number = last_number + 1  # Increment
+                    else:
+                        next_number = 1  # Start from 1 if no students exist
 
-                    # Generate Student ID
+                    student_number = f"{next_number:02d}"  # Formats to '01', '02', '03', etc.
                     student_id = f"AY2425-{student_number}"
 
                     # Create Student

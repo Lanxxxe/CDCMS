@@ -6,7 +6,7 @@
 <!-- Welcome Section -->
 <div class="welcome-section d-flex align-items-center justify-content-between">
     <h3 class="mb-0">Announcement</h3>
-    <a href="{% url 'add_announcement' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Add Announcement</a>
+    <a href="{% url 'add_announcement' %}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Announcement</a>
 </div>
 
 <div class="container-fluid px-4">
@@ -35,8 +35,8 @@
                         <td>{{ announcement.upload_date }}</td>
                         <td>{{ announcement.description }}</td>
                         <td>
-                            <a href="{% url 'update_announcement' announcement.id %}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Update</a>
-                            <a href="{% url 'delete_announcement' announcement.id %}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</a>
+                            <a href="{% url 'update_announcement' announcement.id %}" class="btn btn-primary btn-sm"><i class="fa-solid fa-edit"></i> Update</a>
+                            <a href="{% url 'delete_announcement' announcement.id %}" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</a>
                         </td>
                     </tr>
                 {% endfor %}

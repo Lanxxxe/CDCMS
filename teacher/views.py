@@ -1,20 +1,43 @@
+from django.core.paginator import Paginator
+from django.utils.timezone import localdate
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Case, When, Value, CharField, F, Q
 from django.db.models.functions import Concat
 from django.http import JsonResponse
-from landing.models import Student, GuardianInfo, Enrollment, Announcement, Attendance
-from .forms import AnnouncementForm, GuardianInfoForm
+from landing.models import Student, GuardianInfo, Enrollment, Announcement, Attendance, StudentEvaluation, StandardScore, Recommendation
 from datetime import date, datetime
-import sweetify
+from .forms import AnnouncementForm, GuardianInfoForm, StudentEvaluationForm
+from .utils import mask_email, get_suggestion
+import sweetify, json
 
 def main(request):
     return render(request, 'old.html')
 
 def dashboard(request):
     student_count = Student.objects.count()
-    print(student_count)
+    guardian_count = GuardianInfo.objects.count()
+    enrollments = Enrollment.objects.all()
+    today_attendance = Attendance.objects.filter(date=localdate())
+
+    complete_count = 0
+    incomplete_count = 0
+
+    for enrollment in enrollments:
+        if enrollment.psa and enrollment.guardianQCID and enrollment.recentPhoto and enrollment.immunizationCard:
+            complete_count += 1
+        else:
+            incomplete_count += 1
+
+
+
     data = {
-        'student_count' : student_count
+        'student_count' : student_count,
+        'guardian_count' : guardian_count,
+        'complete_count': complete_count,
+        'incomplete_count': incomplete_count,
+        'total_students' : today_attendance.count(),
+        'present_count' : today_attendance.filter(status="Present").count(),
+        'absent_count' : today_attendance.filter(status="Absent").count()
     }
     return render(request, 'teacher_dashboard.html', data)
 
@@ -70,8 +93,11 @@ def student_management(request):
 def guardian_management(request):
     guardians = GuardianInfo.objects.select_related('student').all()
 
+    for guardian in guardians:
+        guardian.email = mask_email(guardian.email)
+
     data = {
-        'guardians' : guardians,
+        'guardians': guardians,
     }
 
     return render(request, 'teacher/guardian_management.html', data)
@@ -97,20 +123,19 @@ def update_guardian(request, id):
                 print(f"Error updating guardian: {e}")
                 
                 # Show an error message to the user
-                sweetify.error(request, 'An error occurred while updating the guardian information. Please try again.', persistent="Okay")
+                sweetify.error(request, f'An error occurred while updating the guardian information: {form.errors}', persistent="Okay")
         else:
             # If the form is not valid, show an error message
-            sweetify.error(request, 'Invalid form data. Please check the fields and try again.', persistent="Okay")
+            print(form.errors)
+            sweetify.error(request, f'Invalid form data. Please check the fields and try again.', persistent="Okay")
     else:
         # Populate the form with the existing guardian data
         form = GuardianInfoForm(instance=guardian)
     
     return render(request, 'teacher_guardian/update_guardian.html', {'form': form, 'guardian': guardian})
 
-
 def teacher_management(request):
     return render(request, 'teacher/teacher_management.html')
-
 
 def announcement(request):
     announcements = Announcement.objects.all().values(
@@ -244,7 +269,187 @@ def change_attendance(request):
     return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 def grades(request):
-    return render(request, 'teacher/grades.html')
+    kinder_level = request.GET.get('kinder_level', '')  # Get filter value
+
+    # Fetch students with their enrollment and evaluation data
+    students = Student.objects.prefetch_related('enrollment', 'evaluations')
+
+    if kinder_level:
+        students = students.filter(enrollment__schedule=kinder_level)
+
+    # Sort students by Kinder Level ('K1', 'K2', etc.)
+    students = students.order_by('enrollment__schedule')
+
+    # Prepare evaluation data for each student
+    student_data = []
+    for student in students:
+        first_eval = student.evaluations.filter(evaluation_period='First').first()
+        second_eval = student.evaluations.filter(evaluation_period='Second').first()
+
+        # Calculate total scores
+        first_total = (
+            first_eval.gross_motor_score + first_eval.fine_motor_score +
+            first_eval.self_help_score + first_eval.receptive_language_score +
+            first_eval.expressive_language_score + first_eval.cognitive_score +
+            first_eval.socio_emotional_score
+        ) if first_eval else None
+
+        second_total = (
+            second_eval.gross_motor_score + second_eval.fine_motor_score +
+            second_eval.self_help_score + second_eval.receptive_language_score +
+            second_eval.expressive_language_score + second_eval.cognitive_score +
+            second_eval.socio_emotional_score
+        ) if second_eval else None
+
+        student_data.append({
+            'student': student,
+            'first_total': first_total,
+            'second_total': second_total,
+        })
+
+    # Pagination (10 students per page)
+    paginator = Paginator(student_data, 10)
+    page_number = request.GET.get('page')
+    page_students = paginator.get_page(page_number)
+
+    # Get unique kinder levels for the filter dropdown
+    kinder_levels = Enrollment.objects.values_list('schedule', flat=True).distinct()
+
+    context = {
+        'students': page_students,
+        'kinder_levels': kinder_levels,
+        'selected_level': kinder_level
+    }
+
+    return render(request, 'teacher/grades.html', context)
+
+def view_student_grades(request, student_id):
+    student = get_object_or_404(Student, student_id=student_id)
+    evaluations = StudentEvaluation.objects.filter(student=student)
+    print(evaluations)
+    context = {
+        'student': student,
+        'evaluations': evaluations
+    }
+    return render(request, 'grades/view_grades.html', context)
+
+
+def update_student_grades(request, student_id):
+    student = get_object_or_404(Student, student_id=student_id)
+
+    evaluation_period = request.GET.get('evaluation_period')
+
+    if request.method == "POST":
+        evaluation_period = request.POST.get('evaluation_period')
+        evaluation, created = StudentEvaluation.objects.get_or_create(
+            student=student,
+            evaluation_period=evaluation_period,
+        )
+        form = StudentEvaluationForm(request.POST, instance=evaluation)
+        if form.is_valid():
+            evaluation = form.save(commit=False)
+            evaluation.evaluation_period = evaluation_period
+            evaluation.save()
+
+             # Fetch standard scores for the selected semester
+            try:
+                standard_scores = StandardScore.objects.get(semester=evaluation_period)
+            except StandardScore.DoesNotExist:
+                standard_scores = None
+
+            # Construct the JSON object
+            student_performance = {
+                "name": f"{student.firstName} {student.lastName}",
+                "semester": evaluation_period,
+                "student_grades": {
+                    "Gross Motor": evaluation.gross_motor_score,
+                    "Fine Motor": evaluation.fine_motor_score,
+                    "Self Help": evaluation.self_help_score,
+                    "Receptive Language": evaluation.receptive_language_score,
+                    "Expressive Language": evaluation.expressive_language_score,
+                    "Cognitive": evaluation.cognitive_score,
+                    "Socio-Emotional": evaluation.socio_emotional_score,
+                },
+                "standard_raw_scores": {
+                    "Gross Motor": standard_scores.gross_motor if standard_scores else 0,
+                    "Fine Motor": standard_scores.fine_motor if standard_scores else 0,
+                    "Self Help": standard_scores.self_help if standard_scores else 0,
+                    "Receptive Language": standard_scores.receptive_language if standard_scores else 0,
+                    "Expressive Language": standard_scores.expressive_language if standard_scores else 0,
+                    "Cognitive": standard_scores.cognitive if standard_scores else 0,
+                    "Socio-Emotional": standard_scores.socio_emotional if standard_scores else 0,
+                }
+            }
+
+            recommendation, created = Recommendation.objects.get_or_create(
+                student=student,
+                evaluation_period=evaluation_period,
+                defaults={'recommendation': get_suggestion(student_data=student_performance)}  # Set the recommendation if creating a new record
+            )
+
+            if not created:
+                recommendation.recommendation = get_suggestion(student_data=student_performance)
+                recommendation.save()
+
+            sweetify.toast(request, "Updated Successfully", icon="success", timer=3000)
+            return redirect('grades')
+    else:
+        if evaluation_period:
+            evaluation = StudentEvaluation.objects.filter(
+                student=student,
+                evaluation_period=evaluation_period,
+            ).first()
+            form = StudentEvaluationForm(instance=evaluation)
+        else:
+            form = None
+
+    context = {
+        'student': student,
+        'form': form,
+        'evaluation_period': evaluation_period,
+    }
+    return render(request, 'grades/update_grades.html', context)
+
 
 def ai_recommendation(request):
-    return render(request, 'teacher/ai_recommendation.html')
+    # Get filter parameters from the request
+    kinder_level = request.GET.get('kinder_level', '')  # Default to empty string (all levels)
+
+    # Fetch all students
+    students = Student.objects.all()
+
+    # Apply filters if provided
+    if kinder_level:
+        students = students.filter(enrollment__schedule=kinder_level)
+
+    # Prepare data for the template
+    student_data = []
+    for student in students:
+        # Get recommendations for both evaluation periods
+        first_recommendation = student.recommendations.filter(evaluation_period='First').first()
+        second_recommendation = student.recommendations.filter(evaluation_period='Second').first()
+
+        student_data.append({
+            'student_id': student.student_id,
+            'kinder_level': student.enrollment.first().schedule if student.enrollment.exists() else '-',
+            'full_name': f"{student.firstName} {student.lastName}",
+            'first_recommendation': first_recommendation.recommendation if first_recommendation else '-',
+            'second_recommendation': second_recommendation.recommendation if second_recommendation else '-',
+        })
+
+    # Pagination (10 students per page)
+    paginator = Paginator(student_data, 10)
+    page_number = request.GET.get('page')
+    page_students = paginator.get_page(page_number)
+
+    # Get unique Kinder Levels for the filter dropdown (Kinder 1 to Kinder 3)
+    kinder_levels = ['Kinder 1', 'Kinder 2', 'Kinder 3']
+
+    context = {
+        'page_students': page_students,
+        'kinder_levels': kinder_levels,
+        'selected_kinder_level': kinder_level,
+
+    }
+
+    return render(request, 'teacher/ai_recommendation.html', context)

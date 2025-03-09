@@ -1,0 +1,64 @@
+{% extends 'base_teacher.html' %}
+
+{% block title %}Grades - CDCMS{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="welcome-section d-flex justify-content-between align-items-center">
+    <h3 class="mb-0">Grades for {{ student.firstName }} {{ student.lastName }}</h3>
+</div>
+
+<div class="container-fluid px-4">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-sm mt-3">
+            <thead>
+                <tr>
+                    <th>Evaluation Period</th>
+                    <th>Gross Motor</th>
+                    <th>Fine Motor</th>
+                    <th>Self Help</th>
+                    <th>Receptive Language</th>
+                    <th>Expressive Language</th>
+                    <th>Cognitive</th>
+                    <th>Socio Emotional</th>
+                    <th>Total Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evaluation in evaluations %}
+                <tr>
+                    <td>{{ evaluation.get_evaluation_period_display }}</td>
+                    <td>{{ evaluation.gross_motor_score }}</td>
+                    <td>{{ evaluation.fine_motor_score }}</td>
+                    <td>{{ evaluation.self_help_score }}</td>
+                    <td>{{ evaluation.receptive_language_score }}</td>
+                    <td>{{ evaluation.expressive_language_score }}</td>
+                    <td>{{ evaluation.cognitive_score }}</td>
+                    <td>{{ evaluation.socio_emotional_score }}</td>
+                    <td>
+                        {{ evaluation.gross_motor_score|add:evaluation.fine_motor_score|add:evaluation.self_help_score|add:evaluation.receptive_language_score|add:evaluation.expressive_language_score|add:evaluation.cognitive_score|add:evaluation.socio_emotional_score }}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">No grades recorded yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex">
+        <!-- <a href="{% url 'update_student_grades' student.student_id %}" class="btn btn-primary">
+            <i class="fa-solid fa-edit"></i> Update Grades
+        </a> -->
+        <a href="{% url 'grades' %}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-arrow-left"></i> Back</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelector('#grades').classList.toggle('active');
+</script>
+{% endblock %}
+

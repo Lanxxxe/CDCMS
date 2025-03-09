@@ -1,5 +1,5 @@
 from django import forms
-from landing.models import Announcement, GuardianInfo
+from landing.models import Announcement, GuardianInfo, StudentEvaluation
 
 class AnnouncementForm(forms.ModelForm):
     class Meta:
@@ -36,5 +36,32 @@ class GuardianInfoForm(forms.ModelForm):
             'contact_number': forms.NumberInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+
+class StudentEvaluationForm(forms.ModelForm):
+    # Override the evaluation_period field to use a dropdown with a class attribute
+    evaluation_period = forms.ChoiceField(
+        choices=StudentEvaluation.EVALUATION_PERIOD_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = StudentEvaluation
+        fields = [
+            'gross_motor_score', 'fine_motor_score', 
+            'self_help_score', 'receptive_language_score', 'expressive_language_score', 
+            'cognitive_score', 'socio_emotional_score'
+        ]
+        widgets = {
+            'gross_motor_score': forms.NumberInput(attrs={'min': '0', 'max': '20', 'class': 'form-control'}),
+            'fine_motor_score': forms.NumberInput(attrs={'min': '0', 'max': '20', 'class': 'form-control'}),
+            'self_help_score': forms.NumberInput(attrs={'min': '0', 'max': '20', 'class': 'form-control'}),
+            'receptive_language_score': forms.NumberInput(attrs={'min': '0', 'max': '20', 'class': 'form-control'}),
+            'expressive_language_score': forms.NumberInput(attrs={'min': '0', 'max': '20', 'class': 'form-control'}),
+            'cognitive_score': forms.NumberInput(attrs={'min': '0', 'max': '20', 'class': 'form-control'}),
+            'socio_emotional_score': forms.NumberInput(attrs={'min': '0', 'max': '20', 'class': 'form-control'}),
+        }
+
+        
+
 
 

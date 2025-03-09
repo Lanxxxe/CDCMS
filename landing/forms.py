@@ -176,7 +176,7 @@ class EnrollmentForm(forms.Form):
     # Enrollment Information
     schedule = forms.ChoiceField(
         label="Preferred Schedule",
-        choices=[("", "Select Schedule"), ("K1 (3y/o)- 8:00am- 10:00am", "K1 (3y/o)- 8:00am- 10:00am"), ("K2 (4y/o)- 10:15am-12:15nn", "K2 (4y/o)- 10:15am-12:15nn"), ("K3 (4y/o)- 1:30pm-3:30pm", "K3 (4y/o)- 1:30pm-3:30pm")],
+        choices=[("", "Select Schedule"), ("K1", "K1 (3y/o) - 8:00am - 10:00am"), ("K2", "K2 (4y/o) - 10:15am-12:15nn"), ("K3", "K3 (4y/o)- 1:30pm-3:30pm")],
         widget=forms.Select(attrs={'class': 'form-select'})
     )
 
